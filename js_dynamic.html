@@ -20,7 +20,8 @@
       const addBtn = document.querySelector("#addBtn");
       const list = document.getElementById("todoList");
 
-      addBtn.addEventListener("click", function () {
+      // 추가 기능 (버튼, 엔터 둘 다 사용)
+      function addItem() {
         // 앞뒤 공백 제거 (공백만 입력해도 추가되는 문제 수정)
         const text = input.value.trim();
 
@@ -44,8 +45,19 @@
         li.appendChild(delBtn);
         list.appendChild(li);
 
-        // 입력칸 비우기
+        // 입력칸 비우고 다시 입력할 수 있게 커서 이동
         input.value = "";
+        input.focus();
+      }
+
+      addBtn.addEventListener("click", addItem);
+
+      // 엔터키로도 추가
+      input.addEventListener("keydown", function (event) {
+        // 한글 입력 중에 엔터를 누르면 두 번 추가돼서 isComposing 확인
+        if (event.key === "Enter" && !event.isComposing) {
+          addItem();
+        }
       });
     };
   </script>
