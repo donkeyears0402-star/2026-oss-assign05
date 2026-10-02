@@ -63,6 +63,76 @@
     ];
 
     let nextId = 4; // 다음에 추가할 영화 번호
+
+    // Read: 배열에 있는 영화를 테이블에 출력
+    function render() {
+      const list = document.getElementById("movieList");
+      list.innerHTML = ""; // 기존 내용 지우고 다시 그림
+
+      movies.forEach(function (movie) {
+        const tr = document.createElement("tr");
+
+        const titleTd = document.createElement("td");
+        titleTd.innerText = movie.title;
+        tr.appendChild(titleTd);
+
+        const directorTd = document.createElement("td");
+        directorTd.innerText = movie.director;
+        tr.appendChild(directorTd);
+
+        const genreTd = document.createElement("td");
+        genreTd.innerText = movie.genre;
+        tr.appendChild(genreTd);
+
+        const yearTd = document.createElement("td");
+        yearTd.innerText = movie.year;
+        tr.appendChild(yearTd);
+
+        const ratingTd = document.createElement("td");
+        ratingTd.innerText = movie.rating + "점";
+        tr.appendChild(ratingTd);
+
+        // 수정, 삭제 버튼
+        const btnTd = document.createElement("td");
+        const editBtn = document.createElement("button");
+        editBtn.innerText = "수정";
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "삭제";
+        btnTd.appendChild(editBtn);
+        btnTd.appendChild(deleteBtn);
+        tr.appendChild(btnTd);
+
+        list.appendChild(tr);
+      });
+    }
+
+    // Create: 새 영화 추가
+    function addMovie() {
+      const movie = {
+        id: nextId,
+        title: document.getElementById("title").value,
+        director: document.getElementById("director").value,
+        genre: document.getElementById("genre").value,
+        year: Number(document.getElementById("year").value),
+        rating: Number(document.getElementById("rating").value)
+      };
+
+      movies.push(movie);
+      nextId++;
+    }
+
+    window.onload = function () {
+      render();
+
+      const form = document.getElementById("movieForm");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // 새로고침 막기
+
+        addMovie();
+        render();
+        form.reset(); // 입력칸 비우기
+      });
+    };
   </script>
 </body>
 </html>
