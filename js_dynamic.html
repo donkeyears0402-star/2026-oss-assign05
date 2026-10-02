@@ -21,15 +21,18 @@
       const list = document.getElementById("todoList");
 
       addBtn.addEventListener("click", function () {
+        // 앞뒤 공백 제거 (공백만 입력해도 추가되는 문제 수정)
+        const text = input.value.trim();
+
         // 입력칸이 비어 있으면 추가하지 않음
-        if (input.value === "") {
+        if (text === "") {
           alert("할 일을 입력하세요.");
           return;
         }
 
         // li 만들기
         const li = document.createElement("li");
-        li.innerText = input.value;
+        li.innerText = text;
 
         // 삭제 버튼 만들기
         const delBtn = document.createElement("button");
