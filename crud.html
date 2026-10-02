@@ -63,6 +63,7 @@
     ];
 
     let nextId = 4; // 다음에 추가할 영화 번호
+    let editId = null; // 수정 중인 영화 id (null이면 추가)
 
     // Read: 배열에 있는 영화를 테이블에 출력
     function render() {
@@ -96,6 +97,9 @@
         const btnTd = document.createElement("td");
         const editBtn = document.createElement("button");
         editBtn.innerText = "수정";
+        editBtn.addEventListener("click", function () {
+          startEdit(movie.id);
+        });
         const deleteBtn = document.createElement("button");
         deleteBtn.innerText = "삭제";
         btnTd.appendChild(editBtn);
@@ -121,6 +125,38 @@
       nextId++;
     }
 
+    // Update 1: 수정 버튼 누르면 폼에 원래 값 채우기
+    function startEdit(id) {
+      const movie = movies.find(function (m) {
+        return m.id === id;
+      });
+
+      document.getElementById("title").value = movie.title;
+      document.getElementById("director").value = movie.director;
+      document.getElementById("genre").value = movie.genre;
+      document.getElementById("year").value = movie.year;
+      document.getElementById("rating").value = movie.rating;
+
+      editId = id;
+      document.getElementById("saveBtn").innerText = "수정 완료";
+    }
+
+    // Update 2: 배열에 있는 값 바꾸기
+    function updateMovie() {
+      const movie = movies.find(function (m) {
+        return m.id === editId;
+      });
+
+      movie.title = document.getElementById("title").value;
+      movie.director = document.getElementById("director").value;
+      movie.genre = document.getElementById("genre").value;
+      movie.year = Number(document.getElementById("year").value);
+      movie.rating = Number(document.getElementById("rating").value);
+
+      editId = null;
+      document.getElementById("saveBtn").innerText = "저장";
+    }
+
     window.onload = function () {
       render();
 
@@ -128,7 +164,11 @@
       form.addEventListener("submit", function (event) {
         event.preventDefault(); // 새로고침 막기
 
-        addMovie();
+        if (editId === null) {
+          addMovie();
+        } else {
+          updateMovie();
+        }
         render();
         form.reset(); // 입력칸 비우기
       });
