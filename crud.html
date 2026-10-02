@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple CRUD Service</title>
+</head>
+<body>
+  <h1>영화 감상 기록</h1>
+
+  <form id="movieForm">
+    <p>
+      <label for="title">제목</label>
+      <input type="text" id="title">
+    </p>
+    <p>
+      <label for="director">감독</label>
+      <input type="text" id="director">
+    </p>
+    <p>
+      <label for="genre">장르</label>
+      <select id="genre">
+        <option value="">선택하세요</option>
+        <option value="액션">액션</option>
+        <option value="드라마">드라마</option>
+        <option value="코미디">코미디</option>
+        <option value="SF">SF</option>
+        <option value="애니메이션">애니메이션</option>
+      </select>
+    </p>
+    <p>
+      <label for="year">개봉연도</label>
+      <input type="number" id="year">
+    </p>
+    <p>
+      <label for="rating">평점(1~5)</label>
+      <input type="number" id="rating">
+    </p>
+    <button type="submit" id="saveBtn">저장</button>
+  </form>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>제목</th>
+        <th>감독</th>
+        <th>장르</th>
+        <th>개봉연도</th>
+        <th>평점</th>
+        <th>관리</th>
+      </tr>
+    </thead>
+    <tbody id="movieList"></tbody>
+  </table>
+
+  <a href="index.html">메인으로</a>
+
+  <script>
+    // 영화 데이터 (처음 3개)
+    let movies = [
+      { id: 1, title: "인터스텔라", director: "크리스토퍼 놀란", genre: "SF", year: 2014, rating: 5 },
+      { id: 2, title: "기생충", director: "봉준호", genre: "드라마", year: 2019, rating: 4 },
+      { id: 3, title: "인사이드 아웃 2", director: "켈시 맨", genre: "애니메이션", year: 2024, rating: 4 }
+    ];
+
+    let nextId = 4; // 다음에 추가할 영화 번호
+  </script>
+</body>
+</html>
