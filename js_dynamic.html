@@ -13,5 +13,38 @@
   <ul id="todoList"></ul>
 
   <a href="index.html">메인으로</a>
+
+  <script>
+    window.onload = function () {
+      const input = document.getElementById("todoInput");
+      const addBtn = document.querySelector("#addBtn");
+      const list = document.getElementById("todoList");
+
+      addBtn.addEventListener("click", function () {
+        // 입력칸이 비어 있으면 추가하지 않음
+        if (input.value === "") {
+          alert("할 일을 입력하세요.");
+          return;
+        }
+
+        // li 만들기
+        const li = document.createElement("li");
+        li.innerText = input.value;
+
+        // 삭제 버튼 만들기
+        const delBtn = document.createElement("button");
+        delBtn.innerText = "삭제";
+        delBtn.addEventListener("click", function () {
+          li.remove();
+        });
+
+        li.appendChild(delBtn);
+        list.appendChild(li);
+
+        // 입력칸 비우기
+        input.value = "";
+      });
+    };
+  </script>
 </body>
 </html>
