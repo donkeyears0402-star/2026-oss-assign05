@@ -113,6 +113,54 @@
       });
     }
 
+    // 유효성 검사 (추가, 수정 둘 다 사용) - 통과하면 true
+    function validate() {
+      const title = document.getElementById("title").value.trim();
+      const director = document.getElementById("director").value.trim();
+      const genre = document.getElementById("genre").value;
+      const year = Number(document.getElementById("year").value);
+      const rating = Number(document.getElementById("rating").value);
+
+      // 1. 필수 입력
+      if (title === "" || director === "") {
+        alert("제목과 감독을 입력하세요.");
+        return false;
+      }
+
+      // 2. 길이
+      if (title.length > 30) {
+        alert("제목은 30자 이내로 입력하세요.");
+        return false;
+      }
+
+      // 3. 장르 선택
+      if (genre === "") {
+        alert("장르를 선택하세요.");
+        return false;
+      }
+
+      // 4. 숫자 범위
+      if (year < 1900 || year > 2026) {
+        alert("개봉연도는 1900~2026 사이로 입력하세요.");
+        return false;
+      }
+      if (rating < 1 || rating > 5) {
+        alert("평점은 1~5 사이로 입력하세요.");
+        return false;
+      }
+
+      // 5. 같은 제목이 있는지 (수정할 때는 자기 자신 빼고)
+      const same = movies.filter(function (m) {
+        return m.title === title && m.id !== editId;
+      });
+      if (same.length > 0) {
+        alert("이미 등록된 영화입니다.");
+        return false;
+      }
+
+      return true;
+    }
+
     // Create: 새 영화 추가
     function addMovie() {
       const movie = {
@@ -189,6 +237,10 @@
       const form = document.getElementById("movieForm");
       form.addEventListener("submit", function (event) {
         event.preventDefault(); // 새로고침 막기
+
+        if (!validate()) {
+          return; // 검사 통과 못 하면 저장 안 함
+        }
 
         if (editId === null) {
           addMovie();
