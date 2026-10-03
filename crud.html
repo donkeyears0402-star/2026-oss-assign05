@@ -102,6 +102,9 @@
         });
         const deleteBtn = document.createElement("button");
         deleteBtn.innerText = "삭제";
+        deleteBtn.addEventListener("click", function () {
+          deleteMovie(movie.id);
+        });
         btnTd.appendChild(editBtn);
         btnTd.appendChild(deleteBtn);
         tr.appendChild(btnTd);
@@ -155,6 +158,29 @@
 
       editId = null;
       document.getElementById("saveBtn").innerText = "저장";
+    }
+
+    // Delete: 영화 삭제
+    function deleteMovie(id) {
+      if (!confirm("삭제하시겠습니까?")) {
+        return; // 취소 누르면 아무것도 안 함
+      }
+
+      // 몇 번째에 있는지 찾기
+      const index = movies.findIndex(function (m) {
+        return m.id === id;
+      });
+
+      movies.splice(index, 1); // 그 위치에서 1개 삭제
+
+      // 수정 중이던 영화를 지웠으면 폼도 처음 상태로
+      if (editId === id) {
+        editId = null;
+        document.getElementById("movieForm").reset();
+        document.getElementById("saveBtn").innerText = "저장";
+      }
+
+      render();
     }
 
     window.onload = function () {
